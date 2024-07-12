@@ -24,27 +24,27 @@ export default new Phaser.Game(config);
 
 
 const songs = [
-  { title: "Song 1", src: "./src/sounds/LaMonaJimenez-RamitoDeVioletas.mp3" },
-  { title: "Song 2", src: "./src/sounds/LaMonaJimenez-Elenamorado.mp3" },
-  { title: "Song 3", src: "./src/sounds/LaMonaJimenez-TeVasACasar.mp3" },
-  { title: "Song 4", src: "./src/sounds/LaMona-LoQueHaPasadoAnoche.mp3" },
-  { title: "Song 5", src: "./src/sounds/LaMona-Amordecomprayventa.mp3" },
-  { title: "Song 6", src: "./src/sounds/Q'Lokura-ClaroAbsurdo.mp3" },
-  { title: "Song 7", src: "./src/sounds/Q'Lokura-Buscateunhombrequetequiera-Poliamor.mp3" },
-  { title: "Song 8", src: "./src/sounds/Q'Lokura-NoPachangaNaninga.mp3" },
-  { title: "Song 9", src: "./src/sounds/Q'LokuraFtEugeQuevedo-Amigos.mp3" },
-  { title: "Song 10", src: "./src/sounds/WALTEROLMOSENGANCHADOS.mp3" },
-  { title: "Song 11", src: "./src/sounds/LBC-Queseio.mp3" },
-  { title: "Song 12", src: "./src/sounds/LBC-OlvidarteDeMiJamasPodras.mp3" },
-  { title: "Song 13", src: "./src/sounds/MONADA-MIHABITACION.mp3" },
-  { title: "Song 14", src: "./src/sounds/Monada-La gaita de la caña.mp3" },
-  { title: "Song 15", src: "./src/sounds/Monada-enganchados.mp3" },
-  { title: "Song 16", src: "./src/sounds/LAFIESTA-ESELOBO.MP3" },
-  { title: "Song 17", src: "./src/sounds/EnganchadosDamianCordoba.mp3" },
-  { title: "Song 18", src: "./src/sounds/Ulises Bueno-AhoraMirame.mp3" },
-  { title: "Song 18", src: "./src/sounds/UlisesBueno-YaNoVolvera.mp3" },
-  { title: "Song 18", src: "./src/sounds/UlisesBueno-Loco.mp3" },
-  { title: "Song 18", src: "./src/sounds/SoyCordobes.mp3"}
+  { title: "Song 1", src: "./public/sounds/LaMonaJimenez-RamitoDeVioletas.mp3" },
+  { title: "Song 2", src: "./public/sounds/LaMonaJimenez-Elenamorado.mp3" },
+  { title: "Song 3", src: "./public/sounds/LaMonaJimenez-TeVasACasar.mp3" },
+  { title: "Song 4", src: "./public/sounds/LaMona-LoQueHaPasadoAnoche.mp3" },
+  { title: "Song 5", src: "./public/sounds/LaMona-Amordecomprayventa.mp3" },
+  { title: "Song 6", src: "./public/sounds/Q'Lokura-ClaroAbsurdo.mp3" },
+  { title: "Song 7", src: "./public/sounds/Q'Lokura-Buscateunhombrequetequiera-Poliamor.mp3" },
+  { title: "Song 8", src: "./public/sounds/Q'Lokura-NoPachangaNaninga.mp3" },
+  { title: "Song 9", src: "./public/sounds/Q'LokuraFtEugeQuevedo-Amigos.mp3" },
+  { title: "Song 10", src: "./public/sounds/WALTEROLMOSENGANCHADOS.mp3" },
+  { title: "Song 11", src: "./public/sounds/LBC-Queseio.mp3" },
+  { title: "Song 12", src: "./public/sounds/LBC-OlvidarteDeMiJamasPodras.mp3" },
+  { title: "Song 13", src: "./public/sounds/MONADA-MIHABITACION.mp3" },
+  { title: "Song 14", src: "./public/sounds/Monada-La gaita de la caña.mp3" },
+  { title: "Song 15", src: "./public/sounds/Monada-enganchados.mp3" },
+  { title: "Song 16", src: "./public/sounds/LAFIESTA-ESELOBO.MP3" },
+  { title: "Song 17", src: "./public/sounds/EnganchadosDamianCordoba.mp3" },
+  { title: "Song 18", src: "./public/sounds/Ulises Bueno-AhoraMirame.mp3" },
+  { title: "Song 18", src: "./public/sounds/UlisesBueno-YaNoVolvera.mp3" },
+  { title: "Song 18", src: "./public/sounds/UlisesBueno-Loco.mp3" },
+  { title: "Song 18", src: "./public/sounds/SoyCordobes.mp3"}
 ];
 
 let currentSongIndex = 0;
