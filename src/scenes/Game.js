@@ -134,9 +134,9 @@ export class Game extends Scene {
                 this.scene.start('GameWin', { message: 'Ganaste está ricaso' });
             } else {
                 if (cocaPercentage > 70) {
-                    this.gameOver('Perdiste, esto está coqueado');
+                    this.gameOver('Perdiste \n Esto está coqueado');
                 } else if (fernetPercentage > 30) {
-                    this.gameOver('Perdiste, esto está puraso');
+                    this.gameOver('Perdiste \n Esto está puraso');
                 } else {
                     this.gameOver('No llenaste \n el vaso correctamente');
                 }
