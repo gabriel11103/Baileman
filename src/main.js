@@ -100,11 +100,23 @@ function playPauseSong() {
       isPlaying = false;
     });
   } else {
-    audioContext.resume().then(() => {
-      playPauseButton.innerHTML = '<i class="material-icons">pause</i>';
-      isPlaying = true;
-    });
+    // Verificar si el contexto de audio necesita ser reanudado
+    if (audioContext.state === 'suspended') {
+      document.body.addEventListener('click', resumeAudioContext, { once: true });
+    } else {
+      audioContext.resume().then(() => {
+        playPauseButton.innerHTML = '<i class="material-icons">pause</i>';
+        isPlaying = true;
+      });
+    }
   }
+}
+
+// Reanudar el contexto de audio en respuesta a un gesto del usuario
+function resumeAudioContext() {
+  audioContext.resume().then(() => {
+    playPauseSong();
+  });
 }
 
 // Cambiar a la canción anterior
@@ -134,9 +146,6 @@ nextButton.addEventListener("click", nextSong);
 // Iniciar la reproducción cuando la ventana se carga
 async function startPlayback() {
   try {
-    // Asegurarse de que el contexto está en estado 'running'
-    await audioContext.resume();
-
     // Mezclar las canciones restantes, excluyendo la primera
     const remainingSongs = songs.slice(1);
     shuffleArray(remainingSongs);
@@ -149,15 +158,7 @@ async function startPlayback() {
 
     // Asegurarse de que el contexto no esté en estado 'suspended'
     if (audioContext.state === 'suspended') {
-      await new Promise(resolve => {
-        document.body.addEventListener('click', () => {
-          if (audioContext.state === 'suspended') {
-            audioContext.resume().then(() => resolve());
-          } else {
-            resolve();
-          }
-        });
-      });
+      document.body.addEventListener('click', resumeAudioContext, { once: true });
     }
   } catch (error) {
     console.error("Error al iniciar la reproducción automática:", error);
@@ -166,3 +167,4 @@ async function startPlayback() {
 
 // Asegurarse de que la música comienza automáticamente cuando la página se carga
 window.addEventListener("load", startPlayback);
+
