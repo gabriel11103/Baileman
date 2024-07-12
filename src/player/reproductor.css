@@ -1,0 +1,28 @@
+.player {
+  position: fixed;
+  bottom: 90%;
+  left: 25%;
+  transform: translateX(-50%);
+  background:rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 0px;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-controls button {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 10px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.player-controls button:hover {
+  color: #f0f0f0;
+}
