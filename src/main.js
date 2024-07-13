@@ -48,10 +48,10 @@ const songs = [
   { title: "Song 15", src: "./public/sounds/Monada-enganchados.MP3" },
   { title: "Song 16", src: "./public/sounds/LAFIESTA-ESELOBO.MP3" },
   { title: "Song 17", src: "./public/sounds/EnganchadosDamianCordoba.MP3" },
-  { title: "Song 18", src: "./public/sounds/Ulises Bueno-AhoraMirame.MP3" },
-  { title: "Song 18", src: "./public/sounds/UlisesBueno-YaNoVolvera.MP3" },
-  { title: "Song 18", src: "./public/sounds/UlisesBueno-Loco.MP3" },
-  { title: "Song 18", src: "./public/sounds/SoyCordobes.MP3"}
+  { title: "Song 19", src: "./public/sounds/Ulises Bueno-AhoraMirame.MP3" },
+  { title: "Song 20", src: "./public/sounds/UlisesBueno-YaNoVolvera.MP3" },
+  { title: "Song 21", src: "./public/sounds/UlisesBueno-Loco.MP3" },
+  { title: "Song 22", src: "./public/sounds/SoyCordobes.MP3"}
 ];
 
 const playPauseButton = document.getElementById("play-pause");
