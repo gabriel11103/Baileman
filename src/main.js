@@ -31,28 +31,29 @@ let currentSongIndex = 0;
 let playlist = [];
 
 const songs = [
-  { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.MP3', title: 'Ramito de Violetas' },
-  { title: "Song 2", src: "./public/sounds/LaMonaJimenez-Elenamorado.MP3" },
-  { title: "Song 3", src: "./public/sounds/LaMonaJimenez-TeVasACasar.MP3" },
-  { title: "Song 4", src: "./public/sounds/LaMona-LoQueHaPasadoAnoche.MP3" },
-  { title: "Song 5", src: "./public/sounds/LaMona-Amordecomprayventa.MP3" },
-  { title: "Song 6", src: "./public/sounds/Q'Lokura-ClaroAbsurdo.MP3" },
-  { title: "Song 7", src: "./public/sounds/Q'Lokura-Buscateunhombrequetequiera-Poliamor.MP3" },
-  { title: "Song 8", src: "./public/sounds/Q'Lokura-NoPachangaNaninga.MP3" },
-  { title: "Song 9", src: "./public/sounds/Q'LokuraFtEugeQuevedo-Amigos.MP3" },
-  { title: "Song 10", src: "./public/sounds/WALTEROLMOSENGANCHADOS.MP3" },
-  { title: "Song 11", src: "./public/sounds/LBC-Queseio.MP3" },
-  { title: "Song 12", src: "./public/sounds/LBC-OlvidarteDeMiJamasPodras.MP3" },
-  { title: "Song 13", src: "./public/sounds/MONADA-MIHABITACION.MP3" },
-  { title: "Song 14", src: "./public/sounds/Monada-La gaita de la caña.MP3" },
-  { title: "Song 15", src: "./public/sounds/Monada-enganchados.MP3" },
-  { title: "Song 16", src: "./public/sounds/LAFIESTA-ESELOBO.MP3" },
-  { title: "Song 17", src: "./public/sounds/EnganchadosDamianCordoba.MP3" },
-  { title: "Song 19", src: "./public/sounds/Ulises Bueno-AhoraMirame.MP3" },
-  { title: "Song 20", src: "./public/sounds/UlisesBueno-YaNoVolvera.MP3" },
-  { title: "Song 21", src: "./public/sounds/UlisesBueno-Loco.MP3" },
-  { title: "Song 22", src: "./public/sounds/SoyCordobes.MP3"}
-];
+    { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.MP3', title: 'Ramito de Violetas' },
+    { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.MP3', title: 'Ramito de Violetas' },
+    { src: '/sounds/LaMonaJimenez-Elenamorado.MP3', title: 'El enamorado' },
+    { src: '/sounds/LaMonaJimenez-TeVasACasar.MP3', title: 'Te Vas A Casar' },
+    { src: '/sounds/LaMona-LoQueHaPasadoAnoche.MP3', title: 'Lo Que Ha Pasado Anoche' },
+    { src: '/sounds/LaMona-Amordecomprayventa.MP3', title: 'Amor de Compra y Venta' },
+    { src: '/sounds/QLokura-ClaroAbsurdo.MP3', title: 'Claro Absurdo' },
+    { src: '/sounds/QLokura-Buscateunhombrequetequiera-Poliamor.MP3', title: 'Búscate un Hombre que te Quiera (Poliamor)' },
+    { src: '/sounds/QLokura-NoPachangaNaninga.MP3', title: 'No Pachanga Naninga' },
+    { src: '/sounds/QLokuraFtEugeQuevedo-Amigos.MP3', title: 'Amigos' },
+    { src: '/sounds/WALTEROLMOSENGANCHADOS.MP3', title: 'Enganchados Walter Olmos' },
+    { src: '/sounds/LBC-Queseio.MP3', title: 'Que Se io' },
+    { src: '/sounds/LBC-OlvidarteDeMiJamasPodras.MP3', title: 'Olvidarte De Mí Jamás Podrás' },
+    { src: '/sounds/MONADA-MIHABITACION.MP3', title: 'Mi Habitación' },
+    { src: '/sounds/Monada-La gaita de la caña.MP3', title: 'La Gaita de la Caña' },
+    { src: '/sounds/Monada-enganchados.MP3', title: 'Enganchados' },
+    { src: '/sounds/LAFIESTA-ESELOBO.MP3', title: 'Ese Lobo' },
+    { src: '/sounds/EnganchadosDamianCordoba.MP3', title: 'Enganchados con Damián Córdoba' },
+    { src: '/sounds/Ulises Bueno-AhoraMirame.MP3', title: 'Ahora Mírame' },
+    { src: '/sounds/UlisesBueno-YaNoVolvera.MP3', title: 'Ya No Volverá' },
+    { src: '/sounds/UlisesBueno-Loco.MP3', title: 'Loco' },
+    { src: '/sounds/SoyCordobes.MP3', title: 'Soy Cordobés' }
+  ];
 
 const playPauseButton = document.getElementById("play-pause");
 const prevButton = document.getElementById("prev");
