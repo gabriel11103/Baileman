@@ -6,7 +6,6 @@ export class LevelSelect extends Scene {
     }
 
     create() {
-        //this.cameras.main.setBackgroundColor(0x87CEEB); // Fondo azul claro
         this.add.image(512, 384, 'background');
 
         // Título de la pantalla de selección de nivel

@@ -6,7 +6,6 @@ export class MainMenu extends Scene {
     }
 
     preload() {
-        // Asegúrate de que los recursos estén cargados
         this.load.image('background', 'assets/background.png');
         this.load.image('logo', 'assets/logo.png');
     }
