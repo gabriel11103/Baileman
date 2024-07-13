@@ -27,10 +27,11 @@ export class Preloader extends Scene {
         this.load.image('loseMark', 'perder.jpg');
         this.load.image('ganar', 'win.png');
         this.load.image('logo', 'escudoCba.png');
-        this.load.image('background2', 'Designer3.png'); 
+        this.load.image('background2', 'Designer3.png'); // Asegúrate de tener esta imagen en tu carpeta de assets
     }
 
     create() {
         this.scene.start('MainMenu');
     }
 }
+

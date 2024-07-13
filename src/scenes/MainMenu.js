@@ -5,12 +5,18 @@ export class MainMenu extends Scene {
         super('MainMenu');
     }
 
+    preload() {
+        // Asegúrate de que los recursos estén cargados
+        this.load.image('background', 'assets/background.png');
+        this.load.image('logo', 'assets/logo.png');
+    }
+
     create() {
         this.add.image(512, 384, 'background');
-        this.add.image(512, 400, 'logo');
+        this.add.image(512, 200, 'logo').setScale(0.5);
 
         // Botón de Inicio
-        const startButton = this.add.text(512, 460, 'Inicio', {
+        const startButton = this.add.text(512, 400, 'Inicio', {
             fontFamily: 'Arial Black',
             fontSize: 38,
             color: '#ffffff',
@@ -20,11 +26,11 @@ export class MainMenu extends Scene {
         }).setOrigin(0.5).setInteractive();
 
         startButton.on('pointerdown', () => {
-            this.scene.start('Game');
+            this.scene.start('LevelSelect');
         });
 
         // Botón de Reglas
-        const rulesButton = this.add.text(512, 530, 'Reglas', {
+        const rulesButton = this.add.text(512, 500, 'Reglas', {
             fontFamily: 'Arial Black',
             fontSize: 38,
             color: '#ffffff',
@@ -38,4 +44,3 @@ export class MainMenu extends Scene {
         });
     }
 }
-
