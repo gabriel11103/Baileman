@@ -29,7 +29,7 @@ let audioSource = null;
 let audioBuffer = null;
 let isPlaying = false;
 let playlist = [
-  { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.mp3' },
+  { src: './public/sounds/LaMonaJimenez-RamitoDeVioletas.mp3' },
   // otras canciones
 ];
 
