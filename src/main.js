@@ -23,36 +23,15 @@ const config = {
 export default new Phaser.Game(config);
 
 
-const songs = [
-  { title: "Song 1", src: "./public/sounds/LaMonaJimenez-RamitoDeVioletas.mp3" },
-  { title: "Song 2", src: "./public/sounds/LaMonaJimenez-Elenamorado.mp3" },
-  { title: "Song 3", src: "./public/sounds/LaMonaJimenez-TeVasACasar.mp3" },
-  { title: "Song 4", src: "./public/sounds/LaMona-LoQueHaPasadoAnoche.mp3" },
-  { title: "Song 5", src: "./public/sounds/LaMona-Amordecomprayventa.mp3" },
-  { title: "Song 6", src: "./public/sounds/Q'Lokura-ClaroAbsurdo.mp3" },
-  { title: "Song 7", src: "./public/sounds/Q'Lokura-Buscateunhombrequetequiera-Poliamor.mp3" },
-  { title: "Song 8", src: "./public/sounds/Q'Lokura-NoPachangaNaninga.mp3" },
-  { title: "Song 9", src: "./public/sounds/Q'LokuraFtEugeQuevedo-Amigos.mp3" },
-  { title: "Song 10", src: "./public/sounds/WALTEROLMOSENGANCHADOS.mp3" },
-  { title: "Song 11", src: "./public/sounds/LBC-Queseio.mp3" },
-  { title: "Song 12", src: "./public/sounds/LBC-OlvidarteDeMiJamasPodras.mp3" },
-  { title: "Song 13", src: "./public/sounds/MONADA-MIHABITACION.mp3" },
-  { title: "Song 14", src: "./public/sounds/Monada-La gaita de la caña.mp3" },
-  { title: "Song 15", src: "./public/sounds/Monada-enganchados.mp3" },
-  { title: "Song 16", src: "./public/sounds/LAFIESTA-ESELOBO.MP3" },
-  { title: "Song 17", src: "./public/sounds/EnganchadosDamianCordoba.mp3" },
-  { title: "Song 18", src: "./public/sounds/Ulises Bueno-AhoraMirame.mp3" },
-  { title: "Song 18", src: "./public/sounds/UlisesBueno-YaNoVolvera.mp3" },
-  { title: "Song 18", src: "./public/sounds/UlisesBueno-Loco.mp3" },
-  { title: "Song 18", src: "./public/sounds/SoyCordobes.mp3"}
-];
-
 let currentSongIndex = 0;
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let audioSource = null;
 let audioBuffer = null;
 let isPlaying = false;
-let playlist = [];
+let playlist = [
+  { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.mp3' },
+  // otras canciones
+];
 
 const playPauseButton = document.getElementById("play-pause");
 const prevButton = document.getElementById("prev");
@@ -101,23 +80,11 @@ function playPauseSong() {
       isPlaying = false;
     });
   } else {
-    // Verificar si el contexto de audio necesita ser reanudado
-    if (audioContext.state === 'suspended') {
-      document.body.addEventListener('click', resumeAudioContext, { once: true });
-    } else {
-      audioContext.resume().then(() => {
-        playPauseButton.innerHTML = '<i class="material-icons">pause</i>';
-        isPlaying = true;
-      });
-    }
+    audioContext.resume().then(() => {
+      playPauseButton.innerHTML = '<i class="material-icons">pause</i>';
+      isPlaying = true;
+    });
   }
-}
-
-// Reanudar el contexto de audio en respuesta a un gesto del usuario
-function resumeAudioContext() {
-  audioContext.resume().then(() => {
-    playPauseSong();
-  });
 }
 
 // Cambiar a la canción anterior
@@ -147,19 +114,30 @@ nextButton.addEventListener("click", nextSong);
 // Iniciar la reproducción cuando la ventana se carga
 async function startPlayback() {
   try {
+    // Asegurarse de que el contexto está en estado 'running'
+    await audioContext.resume();
+
     // Mezclar las canciones restantes, excluyendo la primera
-    const remainingSongs = songs.slice(1);
+    const remainingSongs = playlist.slice(1);
     shuffleArray(remainingSongs);
 
     // La primera canción es fija, el resto es aleatorio
-    playlist = [songs[0], ...remainingSongs]; 
+    playlist = [playlist[0], ...remainingSongs]; 
 
     // Cargar y reproducir la primera canción
     await loadAndPlaySong(currentSongIndex);
 
     // Asegurarse de que el contexto no esté en estado 'suspended'
     if (audioContext.state === 'suspended') {
-      document.body.addEventListener('click', resumeAudioContext, { once: true });
+      await new Promise(resolve => {
+        document.body.addEventListener('click', () => {
+          if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => resolve());
+          } else {
+            resolve();
+          }
+        });
+      });
     }
   } catch (error) {
     console.error("Error al iniciar la reproducción automática:", error);
@@ -168,4 +146,3 @@ async function startPlayback() {
 
 // Asegurarse de que la música comienza automáticamente cuando la página se carga
 window.addEventListener("load", startPlayback);
-
