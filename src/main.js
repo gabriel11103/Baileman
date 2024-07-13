@@ -31,29 +31,28 @@ let currentSongIndex = 0;
 let playlist = [];
 
 const songs = [
-    { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.MP3', title: 'Ramito de Violetas' },
-    { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.MP3', title: 'Ramito de Violetas' },
-    { src: '/sounds/LaMonaJimenez-Elenamorado.MP3', title: 'El enamorado' },
-    { src: '/sounds/LaMonaJimenez-TeVasACasar.MP3', title: 'Te Vas A Casar' },
-    { src: '/sounds/LaMona-LoQueHaPasadoAnoche.MP3', title: 'Lo Que Ha Pasado Anoche' },
-    { src: '/sounds/LaMona-Amordecomprayventa.MP3', title: 'Amor de Compra y Venta' },
-    { src: '/sounds/QLokura-ClaroAbsurdo.MP3', title: 'Claro Absurdo' },
-    { src: '/sounds/QLokura-Buscateunhombrequetequiera-Poliamor.MP3', title: 'Búscate un Hombre que te Quiera (Poliamor)' },
-    { src: '/sounds/QLokura-NoPachangaNaninga.MP3', title: 'No Pachanga Naninga' },
-    { src: '/sounds/QLokuraFtEugeQuevedo-Amigos.MP3', title: 'Amigos' },
-    { src: '/sounds/WALTEROLMOSENGANCHADOS.MP3', title: 'Enganchados Walter Olmos' },
-    { src: '/sounds/LBC-Queseio.MP3', title: 'Que Se io' },
-    { src: '/sounds/LBC-OlvidarteDeMiJamasPodras.MP3', title: 'Olvidarte De Mí Jamás Podrás' },
-    { src: '/sounds/MONADA-MIHABITACION.MP3', title: 'Mi Habitación' },
-    { src: '/sounds/Monada-La gaita de la caña.MP3', title: 'La Gaita de la Caña' },
-    { src: '/sounds/Monada-enganchados.MP3', title: 'Enganchados' },
-    { src: '/sounds/LAFIESTA-ESELOBO.MP3', title: 'Ese Lobo' },
-    { src: '/sounds/EnganchadosDamianCordoba.MP3', title: 'Enganchados con Damián Córdoba' },
-    { src: '/sounds/Ulises Bueno-AhoraMirame.MP3', title: 'Ahora Mírame' },
-    { src: '/sounds/UlisesBueno-YaNoVolvera.MP3', title: 'Ya No Volverá' },
-    { src: '/sounds/UlisesBueno-Loco.MP3', title: 'Loco' },
-    { src: '/sounds/SoyCordobes.MP3', title: 'Soy Cordobés' }
-  ];
+  { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.MP3', title: 'Ramito de Violetas' },
+  { src: '/sounds/LaMonaJimenez-Elenamorado.MP3', title: 'El enamorado' },
+  { src: '/sounds/LaMonaJimenez-TeVasACasar.MP3', title: 'Te Vas A Casar' },
+  { src: '/sounds/LaMona-LoQueHaPasadoAnoche.MP3', title: 'Lo Que Ha Pasado Anoche' },
+  { src: '/sounds/LaMona-Amordecomprayventa.MP3', title: 'Amor de Compra y Venta' },
+  { src: '/sounds/QLokura-ClaroAbsurdo.MP3', title: 'Claro Absurdo' },
+  { src: '/sounds/QLokura-Buscateunhombrequetequiera-Poliamor.MP3', title: 'Búscate un Hombre que te Quiera (Poliamor)' },
+  { src: '/sounds/QLokura-NoPachangaNaninga.MP3', title: 'No Pachanga Naninga' },
+  { src: '/sounds/QLokuraFtEugeQuevedo-Amigos.MP3', title: 'Amigos' },
+  { src: '/sounds/WALTEROLMOSENGANCHADOS.MP3', title: 'Enganchados Walter Olmos' },
+  { src: '/sounds/LBC-Queseio.MP3', title: 'Que Se io' },
+  { src: '/sounds/LBC-OlvidarteDeMiJamasPodras.MP3', title: 'Olvidarte De Mí Jamás Podrás' },
+  { src: '/sounds/MONADA-MIHABITACION.MP3', title: 'Mi Habitación' },
+  { src: '/sounds/Monada-La gaita de la caña.MP3', title: 'La Gaita de la Caña' },
+  { src: '/sounds/Monada-enganchados.MP3', title: 'Enganchados' },
+  { src: '/sounds/LAFIESTA-ESELOBO.MP3', title: 'Ese Lobo' },
+  { src: '/sounds/EnganchadosDamianCordoba.MP3', title: 'Enganchados con Damián Córdoba' },
+  { src: '/sounds/Ulises Bueno-AhoraMirame.MP3', title: 'Ahora Mírame' },
+  { src: '/sounds/UlisesBueno-YaNoVolvera.MP3', title: 'Ya No Volverá' },
+  { src: '/sounds/UlisesBueno-Loco.MP3', title: 'Loco' },
+  { src: '/sounds/SoyCordobes.MP3', title: 'Soy Cordobés' }
+];
 
 const playPauseButton = document.getElementById("play-pause");
 const prevButton = document.getElementById("prev");
@@ -70,7 +69,7 @@ function shuffleArray(array) {
 // Función para cargar y reproducir la canción actual
 async function loadAndPlaySong(index) {
   try {
-    // Crear un nuevo contexto de audio
+    // Crear un nuevo contexto de audio si no existe
     if (!audioCtx) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
@@ -93,7 +92,13 @@ async function loadAndPlaySong(index) {
     source = audioCtx.createBufferSource();
     source.buffer = decodedBuffer;
     source.connect(audioCtx.destination);
-    source.loop = true;
+    source.loop = false; // No repetir el audio en loop
+
+    // Manejar el evento cuando termina la canción
+    source.onended = () => {
+      nextSong(); // Avanzar a la siguiente canción
+    };
+
     source.start();
 
     // Cambiar ícono según el estado de reproducción
@@ -139,7 +144,7 @@ async function startPlayback() {
     shuffleArray(remainingSongs);
 
     // La primera canción es fija, el resto es aleatorio
-    playlist = [songs[0], ...remainingSongs]; 
+    playlist = [songs[0], ...remainingSongs];
 
     // Cargar y reproducir la primera canción
     await loadAndPlaySong(currentSongIndex);
@@ -168,3 +173,4 @@ nextButton.addEventListener("click", nextSong);
 
 // Asegurarse de que la música comienza automáticamente cuando la página se carga
 window.addEventListener("load", startPlayback);
+
