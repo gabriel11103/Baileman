@@ -13,6 +13,11 @@ export class Game extends Scene {
         this.halfLimit = this.totalLimit / 2; // Límite de la mitad del vaso
     }
 
+    init(data) {
+        this.tolerance = data.tolerance || 0.1; // Tolerancia por defecto del 10%
+        this.toleranceMessage = `Tolerancia del ${Math.round(this.tolerance * 100)}%`;
+    }
+
     preload() {
         // Cargar las imágenes
         this.load.image('vaso', 'assets/vaso.png');
@@ -40,6 +45,13 @@ export class Game extends Scene {
         this.createButton(800, 500, 'Poner Coca', this.addLiquid2.bind(this));
         this.createButton(490, 300, 'Poner Hielo', this.addHielo.bind(this));
         this.createButton(500, 600, 'Entregar Fernet', this.checkForWin.bind(this));
+
+        // Crear el texto de tolerancia
+        this.add.text(500, 100, this.toleranceMessage, {
+            fontFamily: 'Arial', fontSize: 24, color: '#000000',
+            stroke: '#ffffff', strokeThickness: 4,
+            align: 'center'
+        }).setOrigin(0.5);
 
         // Crear los líquidos como gráficos con fondo blanco
         this.liquid1Background = this.createLiquidBackground(412, 690, this.baseWidth);
@@ -130,7 +142,7 @@ export class Game extends Scene {
             const fernetPercentage = (this.liquid1Level / totalLiquid) * 100;
             const cocaPercentage = (this.liquid2Level / totalLiquid) * 100;
 
-            if (Math.abs(fernetPercentage - 30) <= 5 && Math.abs(cocaPercentage - 70) <= 5) {
+            if (Math.abs(fernetPercentage - 30) <= (this.tolerance * 100) && Math.abs(cocaPercentage - 70) <= (this.tolerance * 100)) {
                 this.scene.start('GameWin', { message: 'Ganaste está ricaso' });
             } else {
                 if (cocaPercentage > 70) {
@@ -172,44 +184,5 @@ export class Game extends Scene {
     startGame() {
         this.resetGame();
         this.scene.restart();
-    }
-}
-
-export class GameWin extends Scene {
-    constructor() {
-        super('GameWin');
-    }
-
-    init(data) {
-        this.message = data.message || '¡Ganaste!';
-    }
-
-    create() {
-        this.cameras.main.setBackgroundColor(0x00ff00); // Color de fondo verde para la victoria
-
-        // Agrega una imagen de fondo con algo de transparencia
-        this.add.image(512, 384, 'background').setAlpha(0.5);
-
-        // Imagen de marca de victoria
-        this.add.image(600, 300, 'winMark').setScale(0.5);
-
-        // Texto de victoria
-        this.add.text(512, 384, this.message, {
-            fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5);
-
-        // Texto para instrucciones de reinicio
-        this.add.text(512, 484, 'Haz clic para volver al Menú Principal', {
-            fontFamily: 'Arial', fontSize: 24, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 4,
-            align: 'center'
-        }).setOrigin(0.5);
-
-        // Maneja el clic del ratón para volver al menú principal
-        this.input.once('pointerdown', () => {
-            this.scene.start('MainMenu');
-        });
     }
 }

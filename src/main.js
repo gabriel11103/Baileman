@@ -1,23 +1,24 @@
 import Phaser from 'phaser';
 import { Boot } from './scenes/Boot';
+import { Preloader } from './scenes/Preloader';
+import { MainMenu } from './scenes/MainMenu';
+import { RulesScene } from './scenes/RuleScene';  
+import { LevelSelect } from './scenes/LevelSelect';
 import { Game } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 import { GameWin } from './scenes/GameWin';
-import { MainMenu } from './scenes/MainMenu';
-import { Preloader } from './scenes/Preloader';
-import { RulesScene } from './scenes/RuleScene';  // Importa la nueva escena de Reglas
 
 const config = {
-  type: Phaser.AUTO,
-  width: 1024,
-  height: 768,
-  parent: 'game-container',
-  backgroundColor: '#028af8',
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-  },
-  scene: [Boot, Preloader, MainMenu, RulesScene, Game, GameOver, GameWin],  // Agrega RulesScene aquí
+    type: Phaser.AUTO,
+    width: 1024,
+    height: 768,
+    parent: 'game-container',
+    backgroundColor: '#028af8',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    scene: [Boot, Preloader, MainMenu, RulesScene, LevelSelect, Game, GameOver, GameWin],  
 };
 
 export default new Phaser.Game(config);
