@@ -23,126 +23,24 @@ const config = {
 export default new Phaser.Game(config);
 
 
-let currentSongIndex = 0;
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-let audioSource = null;
-let audioBuffer = null;
-let isPlaying = false;
-let playlist = [
-  { src: '/sounds/LaMonaJimenez-RamitoDeVioletas.mp3' },
-  // otras canciones
-];
-
-const playPauseButton = document.getElementById("play-pause");
-const prevButton = document.getElementById("prev");
-const nextButton = document.getElementById("next");
-
-// Función para mezclar el array de canciones 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-// Cargar y reproducir la canción actual
-async function loadAndPlaySong(index) {
+const context = new (window.AudioContext || window.webkitAudioContext)();
+async function fetchAndPlay() {
   try {
-    const response = await fetch(playlist[index].src);
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
+    const response = await fetch('/sounds/LaMonaJimenez-RamitoDeVioletas.mp3');
+    if (!response.ok) throw new Error('Network response was not ok.');
     const arrayBuffer = await response.arrayBuffer();
-    audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    const audioBuffer = await context.decodeAudioData(arrayBuffer);
 
-    if (audioSource) {
-      audioSource.disconnect();
-    }
+    const source = context.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(context.destination);
+    source.start();
 
-    audioSource = audioContext.createBufferSource();
-    audioSource.buffer = audioBuffer;
-    audioSource.connect(audioContext.destination);
-    audioSource.start();
-
-    // Cambiar ícono según el estado de reproducción
-    playPauseButton.innerHTML = '<i class="material-icons">pause</i>';
-    isPlaying = true;
+    console.log('Reproducción iniciada.');
   } catch (error) {
-    console.error("Error al cargar y reproducir la canción:", error);
+    console.error('Error al cargar y reproducir la canción:', error);
   }
 }
 
-// Reproducir o pausar la canción
-function playPauseSong() {
-  if (isPlaying) {
-    audioContext.suspend().then(() => {
-      playPauseButton.innerHTML = '<i class="material-icons">play_arrow</i>';
-      isPlaying = false;
-    });
-  } else {
-    audioContext.resume().then(() => {
-      playPauseButton.innerHTML = '<i class="material-icons">pause</i>';
-      isPlaying = true;
-    });
-  }
-}
+fetchAndPlay();
 
-// Cambiar a la canción anterior
-function prevSong() {
-  currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-  loadAndPlaySong(currentSongIndex);
-}
-
-// Cambiar a la siguiente canción
-function nextSong() {
-  currentSongIndex = (currentSongIndex + 1) % playlist.length;
-  loadAndPlaySong(currentSongIndex);
-}
-
-// Manejar el cambio del estado de la canción
-audioContext.addEventListener("statechange", () => {
-  if (audioContext.state === "suspended" && isPlaying) {
-    nextSong();
-  }
-});
-
-// Event listeners para los botones
-playPauseButton.addEventListener("click", playPauseSong);
-prevButton.addEventListener("click", prevSong);
-nextButton.addEventListener("click", nextSong);
-
-// Iniciar la reproducción cuando la ventana se carga
-async function startPlayback() {
-  try {
-    // Asegurarse de que el contexto está en estado 'running'
-    await audioContext.resume();
-
-    // Mezclar las canciones restantes, excluyendo la primera
-    const remainingSongs = playlist.slice(1);
-    shuffleArray(remainingSongs);
-
-    // La primera canción es fija, el resto es aleatorio
-    playlist = [playlist[0], ...remainingSongs]; 
-
-    // Cargar y reproducir la primera canción
-    await loadAndPlaySong(currentSongIndex);
-
-    // Asegurarse de que el contexto no esté en estado 'suspended'
-    if (audioContext.state === 'suspended') {
-      await new Promise(resolve => {
-        document.body.addEventListener('click', () => {
-          if (audioContext.state === 'suspended') {
-            audioContext.resume().then(() => resolve());
-          } else {
-            resolve();
-          }
-        });
-      });
-    }
-  } catch (error) {
-    console.error("Error al iniciar la reproducción automática:", error);
-  }
-}
-
-// Asegurarse de que la música comienza automáticamente cuando la página se carga
-window.addEventListener("load", startPlayback);
