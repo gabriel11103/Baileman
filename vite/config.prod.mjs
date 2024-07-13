@@ -17,7 +17,7 @@ const phasermsg = () => {
 }   
 
 export default defineConfig({
-    base: './',
+    base: '/',  // Asegúrate de que base esté configurado para tu entorno de producción
     logLevel: 'warning',
     build: {
         rollupOptions: {
@@ -36,7 +36,8 @@ export default defineConfig({
             format: {
                 comments: false
             }
-        }
+        },
+        assetsInclude: ['**/*.mp3'],  // Asegúrate de que los archivos mp3 se manejen correctamente
     },
     server: {
         port: 8080
